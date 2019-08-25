@@ -1,0 +1,48 @@
+{
+  "homepage": "https://github.com/ztrank/azimuth-data-layer#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@types/jest": "^24.0.18",
+    "tslint": "^5.19.0",
+    "ts-jest": "^24.0.2",
+    "jest": "^24.9.0",
+    "@babel/preset-env": "^7.5.5",
+    "typescript": "^3.5.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "^12.7.2"
+  },
+  "bugs": {
+    "url": "https://github.com/ztrank/azimuth-data-layer/issues"
+  },
+  "dependencies": {
+    "@trankzachary/pipeline": "^1.0.2",
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.2"
+  },
+  "author": "ztrank",
+  "main": "dist/index.js",
+  "version": "0.0.0",
+  "name": "azimuth-data-layer",
+  "description": "",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ztrank/azimuth-data-layer.git",
+    "type": "git"
+  },
+  "scripts": {
+    "test": "jest",
+    "postinstall": "node ./dist/scripts/post.install.js",
+    "postversion": "git push && git push --tags",
+    "build": "rmdir dist /s /q && tsc",
+    "version": "git add -A src",
+    "lint": " tslint -p tsconfig.json",
+    "preversion": "npm test && npm run build && npm run lint",
+    "prepublishOnly": "npm test && npm run build && npm run lint",
+    "prepare": ""
+  }
+}

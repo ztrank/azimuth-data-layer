@@ -1,0 +1,1 @@
+export const typeIndexString: string = 'export * from \'./Data.Layer.Factory\';';
