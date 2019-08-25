@@ -4,7 +4,7 @@
 COMING SOON!
 
 ## Use
-1. Include the DataLayerFactory type: `type DataLayerFactory<T> = (schema: string) => T;`
+1. Include the DataLayerFactory type: `type DataLayerFactory<T> = (schema: string) => T;` (Post Install Script should add this into `src/data-layer/Data.Layer.Factory.ts`)
 2. Setup the app.config.json's DataLayer property
 3. Call the `DataLayerBind` function in your application at startup
 4. Inject the factory into your class 
