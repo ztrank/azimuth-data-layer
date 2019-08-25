@@ -5,7 +5,7 @@ import { Bind, SetJsonDefaults } from '@trankzachary/pipeline';
 import { CreateTypes } from './Create.Types.js';
 
 const container = new Container();
-Bind(container)
+Bind(container, 'azimuth-data-layer')
     .register(container, SetJsonDefaults, AppConfig, false, 'app.config.json')
     .register(container, CreateTypes)
     .run(container)

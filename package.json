@@ -15,7 +15,7 @@
     "url": "https://github.com/ztrank/azimuth-data-layer/issues"
   },
   "dependencies": {
-    "@trankzachary/pipeline": "^1.0.2",
+    "@trankzachary/pipeline": "^1.1.0",
     "inversify": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2"

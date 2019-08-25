@@ -1,0 +1,6 @@
+{
+    "DataLayer": {
+        "connection": "${DataLayer.connection}",
+        "schemas": "${DataLayer.schemas}"
+    }
+}
