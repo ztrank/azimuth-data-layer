@@ -1,9 +1,9 @@
 import { Container, interfaces } from 'inversify';
 import { AppSettings } from './interfaces/App.Settings';
-import { ConnectionFactory } from './interfaces/Connection.Factory';
 import { DataLayerSymbols } from './symbols';
 import { DataLayerFactory } from './implementations/Data.Layer.Factory.Impl';
 import { ProcedureNameConverterImpl } from './implementations/Procedure.Name.Converter';
+import { ConnectionFactory } from '../service-references';
 
 export function DataLayerBind(
     container: Container, 

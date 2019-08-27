@@ -1,10 +1,10 @@
 import { interfaces } from 'inversify';
 import { DataLayerSymbols } from '../symbols';
-import { ConnectionFactory } from '../interfaces/Connection.Factory';
 import { AppSettings } from '../interfaces/App.Settings';
 import { mergeMap } from 'rxjs/operators';
 import { DataLayer } from '../interfaces/Data.Layer';
 import { ProcedureNameConverter } from '../types/Procedure.Name.Converter';
+import { ConnectionFactory } from '../../service-references';
 
 function convertName(name: string, converter: ProcedureNameConverter): string {
     if(typeof converter === 'function') {
