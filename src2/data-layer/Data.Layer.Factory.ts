@@ -1,1 +1,0 @@
-export type DataLayerFactory<T> = (schema: string) => T;
