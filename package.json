@@ -36,7 +36,6 @@
   },
   "scripts": {
     "test": "jest",
-    "postinstall": "node ./dist/scripts/post.install.js",
     "postversion": "git push && git push --tags",
     "build": "rmdir dist /s /q && tsc",
     "version": "git add -A src",
