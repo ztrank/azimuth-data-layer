@@ -15,7 +15,6 @@
     "url": "https://github.com/ztrank/azimuth-data-layer/issues"
   },
   "dependencies": {
-    "@trankzachary/pipeline": "^1.1.0",
     "inversify": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2"
@@ -23,7 +22,7 @@
   "author": "ztrank",
   "main": "dist/index.js",
   "version": "1.0.0",
-  "name": "@project-azimuth/azimuth-data-layer",
+  "name": "@project-azimuth/data-layer",
   "description": "",
   "types": "dist/index.d.ts",
   "files": [
