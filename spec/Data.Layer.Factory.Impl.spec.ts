@@ -1,9 +1,10 @@
 import 'reflect-metadata';
-import { Container } from 'inversify';
+import { Container, injectable } from 'inversify';
 import { of, Observable } from 'rxjs';
 import { DataLayerBind } from '../src/data-layer/Data.Layer.Bind';
 import { DataLayerSymbols } from '../src/data-layer/symbols';
 import { DataLayerFactory } from '../src/data-layer/types/Data.Layer.Factory';
+import { HttpExceptions } from '../src/service-references/azimuth-exceptions';
 
 interface MyDataLayerInterface {
     testProc(): Observable<any[][]>;
@@ -35,7 +36,19 @@ const connectionFactory = {
 
 beforeEach(() => {
     connection.execute.mockReset();
-})
+});
+
+@injectable()
+class NotFoundException extends Error {}
+
+@injectable()
+class InternalServerException extends Error {}
+
+function addExceptions(container: Container): Container {
+    container.bind(HttpExceptions.InternalServerException).toConstructor(InternalServerException);
+    container.bind(HttpExceptions.NotFoundException).toConstructor(NotFoundException);
+    return container;
+}
 
 test('Execute No Params', (done) => {
     const container = new Container();
@@ -49,7 +62,7 @@ test('Execute No Params', (done) => {
         return of([[{results:'success'}]]);
     })
 
-    const dataLayerFactory = container.get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
+    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
     const dataLayer = dataLayerFactory('test_interface');
     expect(dataLayer).toBeDefined();
     expect(dataLayer.procTest).toBeDefined();
@@ -82,7 +95,7 @@ test('Execute With Params', (done) => {
         return of([[{results:'success'}]]);
     })
 
-    const dataLayerFactory = container.get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
+    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
     const dataLayer = dataLayerFactory('test_interface');
     expect(dataLayer).toBeDefined();
     expect(dataLayer.procTest).toBeDefined();
