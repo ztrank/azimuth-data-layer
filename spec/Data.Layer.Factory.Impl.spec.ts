@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { Container, injectable } from 'inversify';
 import { of, Observable } from 'rxjs';
-import { DataLayerBind } from '../src/data-layer/Data.Layer.Bind';
-import { DataLayerSymbols } from '../src/data-layer/symbols';
+import { DataLayerModule } from '../src/data-layer/Data.Layer.Module';
 import { DataLayerFactory } from '../src/data-layer/types/Data.Layer.Factory';
 import { HttpExceptions } from '../src/service-references/azimuth-exceptions';
+import { TYPES } from '../src/service-references/azimuth-types';
 
 interface MyDataLayerInterface {
     testProc(): Observable<any[][]>;
@@ -52,9 +52,9 @@ function addExceptions(container: Container): Container {
 
 test('Execute No Params', (done) => {
     const container = new Container();
-    container.bind('AppSettings').toConstantValue(appSettings);
-    container.bind('ConnFact').toConstantValue(connectionFactory);
-    DataLayerBind(container, 'AppSettings', 'ConnFact');
+    container.bind(TYPES.AppSettings).toConstantValue(appSettings);
+    container.bind(TYPES.ConnectionFactory).toConstantValue(connectionFactory);
+    container.load(DataLayerModule);
     connection.execute.mockImplementation((schema, proc, ...inputs: any[]) => {
         expect(schema).toBe('test_interface');
         expect(proc).toBe('test_proc');
@@ -62,7 +62,7 @@ test('Execute No Params', (done) => {
         return of([[{results:'success'}]]);
     })
 
-    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
+    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(TYPES.DataLayerFactory);
     const dataLayer = dataLayerFactory('test_interface');
     expect(dataLayer).toBeDefined();
     expect(dataLayer.procTest).toBeDefined();
@@ -84,9 +84,9 @@ test('Execute No Params', (done) => {
 
 test('Execute With Params', (done) => {
     const container = new Container();
-    container.bind('AppSettings').toConstantValue(appSettings);
-    container.bind('ConnFact').toConstantValue(connectionFactory);
-    DataLayerBind(container, 'AppSettings', 'ConnFact');
+    container.bind(TYPES.AppSettings).toConstantValue(appSettings);
+    container.bind(TYPES.ConnectionFactory).toConstantValue(connectionFactory);
+    container.load(DataLayerModule);
     connection.execute.mockImplementation((schema, proc, ...inputs: any[]) => {
         expect(schema).toBe('test_interface');
         expect(proc).toBe('proc_test');
@@ -95,7 +95,7 @@ test('Execute With Params', (done) => {
         return of([[{results:'success'}]]);
     })
 
-    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(DataLayerSymbols.DataLayerFactory);
+    const dataLayerFactory = addExceptions(container).get<DataLayerFactory<MyDataLayerInterface>>(TYPES.DataLayerFactory);
     const dataLayer = dataLayerFactory('test_interface');
     expect(dataLayer).toBeDefined();
     expect(dataLayer.procTest).toBeDefined();

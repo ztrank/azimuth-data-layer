@@ -1,1 +1,1 @@
-export { DataLayerBind } from './data-layer/Data.Layer.Bind';
+export { DataLayerModule } from './data-layer/Data.Layer.Module';

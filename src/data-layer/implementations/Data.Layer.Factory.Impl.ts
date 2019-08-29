@@ -7,6 +7,7 @@ import { ProcedureNameConverter } from '../types/Procedure.Name.Converter';
 import { ConnectionFactory } from '../../service-references';
 import { HttpExceptions, Exception } from '../../service-references/azimuth-exceptions';
 import { throwError } from 'rxjs';
+import { TYPES } from '../../service-references/azimuth-types';
 
 function convertName(name: string, converter: ProcedureNameConverter): string {
     if(typeof converter === 'function') {
@@ -17,8 +18,8 @@ function convertName(name: string, converter: ProcedureNameConverter): string {
 }
 
 export function DataLayerFactory<T extends DataLayer>(context: interfaces.Context): interfaces.Factory<T> {
-    const appSettings = context.container.get<AppSettings>(DataLayerSymbols.AppSettings);
-    const connectionFactory = context.container.get<ConnectionFactory>(DataLayerSymbols.ConnectionFactory);
+    const appSettings = context.container.get<AppSettings>(TYPES.AppSettings);
+    const connectionFactory = context.container.get<ConnectionFactory>(TYPES.ConnectionFactory);
     const converter = context.container.get<ProcedureNameConverter>(DataLayerSymbols.ProcedureNameConverter);
     const InternalServerError = context.container.get<interfaces.Newable<Exception>>(HttpExceptions.InternalServerException);
     return (schema: string) => {
