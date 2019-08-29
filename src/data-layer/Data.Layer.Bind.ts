@@ -1,4 +1,4 @@
-import { Container, interfaces } from 'inversify';
+import { Container, interfaces, ContainerModule } from 'inversify';
 import { AppSettings } from './interfaces/App.Settings';
 import { DataLayerSymbols } from './symbols';
 import { DataLayerFactory } from './implementations/Data.Layer.Factory.Impl';
@@ -11,16 +11,19 @@ export function DataLayerBind(
     connectionFactory: string | symbol | interfaces.Newable<ConnectionFactory> | interfaces.Abstract<ConnectionFactory>,
     procedureNameConverter: string | symbol | Function = ProcedureNameConverterImpl
 ): symbol {
-    container.bind(DataLayerSymbols.AppSettings).toService(appSettings);
-    container.bind(DataLayerSymbols.ConnectionFactory).toService(connectionFactory);
+    const containerModule = new ContainerModule(bind => {
+        bind(DataLayerSymbols.AppSettings).toService(appSettings);
+        bind(DataLayerSymbols.ConnectionFactory).toService(connectionFactory);
 
-    if(typeof procedureNameConverter === 'function') {
-        container.bind(DataLayerSymbols.ProcedureNameConverter).toFunction(procedureNameConverter);
-    } else {
-        container.bind(DataLayerSymbols.ProcedureNameConverter).toService(procedureNameConverter);
-    }
+        if(typeof procedureNameConverter === 'function') {
+            bind(DataLayerSymbols.ProcedureNameConverter).toFunction(procedureNameConverter);
+        } else {
+            bind(DataLayerSymbols.ProcedureNameConverter).toService(procedureNameConverter);
+        }
+        
+        bind(DataLayerSymbols.DataLayerFactory).toFactory(DataLayerFactory);
+    })
     
-    container.bind(DataLayerSymbols.DataLayerFactory).toFactory(DataLayerFactory);
-
+    container.load(containerModule);
     return DataLayerSymbols.DataLayerFactory;
 }
