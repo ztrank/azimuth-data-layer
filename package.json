@@ -23,7 +23,7 @@
   "author": "ztrank",
   "main": "dist/index.js",
   "version": "1.0.0",
-  "name": "azimuth-data-layer",
+  "name": "@project-azimuth/azimuth-data-layer",
   "description": "",
   "types": "dist/index.d.ts",
   "files": [
